@@ -48,7 +48,7 @@ fn get_videos(directory: &Path) -> Vec<PathBuf> {
                 if path.is_dir() {
                     videos.extend(get_videos(&path));
                 }
-                else if valid_extension.contains(&path.extension().expect("No Extension Found").to_string_lossy().to_lowercase()) && !check_for_h264(&path) {
+                else if valid_extension.contains(&path.extension().expect(&format!("No Extension found for file {}", &path.display())).to_string_lossy().to_lowercase()) && !check_for_h264(&path) {
                     videos.push(path.clone());
                 }
             }

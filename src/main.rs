@@ -45,6 +45,7 @@ fn get_videos(directory: &Path) -> Vec<PathBuf> {
         for file in files {
             if let Ok(file) = file {
                 let path = file.path();
+                // println!("{}", path.display());
                 if path.is_dir() {
                     videos.extend(get_videos(&path));
                 }
@@ -66,11 +67,19 @@ fn main() {
         println!("Usage: ./h264-inator <folder_paths> ...");
         return;
     }
+    // Dirty hack, i will implement it correctly later
+    let verbose = true;
     for i in 1..args.len() {
         if args[i].len() > 0 {
             let directory = Path::new(&args[i]);
             let videos = get_videos(directory);
-        
+            if verbose {
+                println!("VERBOSE | Videos Length: {}", videos.len());
+                for video in &videos {
+                    println!("VERBOSE | {}", video.display());
+                }
+            }
+
             println!("The Following files are NOT in h264.");
             for video in &videos {
                 println!("  {}", video.display());
